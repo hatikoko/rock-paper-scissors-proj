@@ -11,5 +11,8 @@ function getComputerChoice() {
     }
 }
 
+function getHumanChoice() {
+    let choice = prompt("Enter your choice: ");
+}
 
-console.log(getComputerChoice());
+console.log(getHumanChoice());
