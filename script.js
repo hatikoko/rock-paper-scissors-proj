@@ -19,6 +19,7 @@ function getHumanChoice() {
 
 function playGame() {
     let humanScore = 0, computerScore = 0;
+
     function toNumber(choice) {
         switch (choice) {
             case "rock":
@@ -45,24 +46,29 @@ function playGame() {
         }
         humanScore += 1;
         return "You win! " + humanChoice.toLowerCase() + " beats " + computerChoice;
-    }
-    
-    for (let i = 1; i <= 5; ++i) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        let result = playRound(humanSelection, computerSelection);
-        console.log(result);
-    }
-    if (humanScore == computerScore) {
-        console.log("Tie!");
-    }
-    else if (humanScore > computerScore) {
-        console.log("You win the game!");
-    }
-    else {
-        console.log("You lose the game!");
-    }
-    console.log("Your score is: " + humanScore + "\nComputer score is: " + computerScore);
+    }    
+
+    const buttons = document.querySelectorAll(".btn");
+    const div = document.createElement("div");
+    document.body.appendChild(div);
+    buttons.forEach(btn => {
+        btn.addEventListener("click", (event) => {
+            const humanChoice = event.target.dataset.arg;
+            let computerChoice = getComputerChoice();
+            div.innerHTML = playRound(humanChoice, computerChoice);
+            div.innerHTML += "<br> Your score: " + humanScore + " Opponent score: " + computerScore; 
+            if (humanScore == 5) {
+                div.innerHTML += "<br> You WON the game!";
+                humanScore = 0;
+                computerScore = 0;
+            }
+            else if (computerScore == 5)  {
+                div.innerHTML += "<br> YOU LOST the game!";
+                humanScore = 0;
+                computerScore = 0;
+            }
+        });
+    });
 }
 
 playGame();
